@@ -1,0 +1,577 @@
+{% extends "base.html" %}
+
+{% block title %}Process Flow - Digital Signature{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Main Card -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeIn">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="bi bi-diagram-3"></i> Alur Proses Tanda Tangan Digital</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Introduction -->
+                    <div class="text-center mb-5">
+                        <div class="alert alert-primary">
+                            <h5><i class="bi bi-lightbulb"></i> Konsep Dasar Tanda Tangan Digital</h5>
+                            <p class="mb-0">
+                                Tanda tangan digital menggunakan kriptografi asimetris untuk memastikan:
+                                <strong>Autentikasi, Integritas, dan Non-repudiasi</strong> dokumen.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Process Steps -->
+                    <div class="process-steps">
+                        <!-- Step 1 -->
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-2 text-center">
+                                <div class="step-number bg-primary text-white">
+                                    <h2 class="mb-0">1</h2>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h4 class="mb-0"><i class="bi bi-key"></i> Generasi Key Pair RSA</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Sistem menghasilkan pasangan kunci kriptografi menggunakan algoritma RSA 2048-bit:</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="text-success"><i class="bi bi-key"></i> Public Key</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Digunakan untuk verifikasi</li>
+                                                            <li>Dapat dibagikan secara publik</li>
+                                                            <li>Untuk dekripsi tanda tangan</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="text-danger"><i class="bi bi-key-fill"></i> Private Key</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Digunakan untuk menandatangani</li>
+                                                            <li>Harus dijaga kerahasiaan</li>
+                                                            <li>Untuk enkripsi hash dokumen</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <pre class="bg-dark text-light p-3 rounded">
+<code>// RSA Key Generation (2048-bit)
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048
+)
+public_key = private_key.public_key()</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Arrow 1 -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="process-arrow">
+                                    <i class="bi bi-arrow-down-circle-fill text-primary" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-10">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h4 class="mb-0"><i class="bi bi-hash"></i> Hash Dokumen dengan SHA-256</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Dokumen PDF di-hash menggunakan fungsi hash SHA-256 untuk menghasilkan fingerprint unik:</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <ul>
+                                                    <li><strong>Input:</strong> File PDF (binary data)</li>
+                                                    <li><strong>Output:</strong> Hash 256-bit (64 karakter hex)</li>
+                                                    <li><strong>Sifat:</strong> Deterministik - input sama selalu menghasilkan hash sama</li>
+                                                    <li><strong>Keamanan:</strong> Collision resistant, one-way function</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4 text-center">
+                                                <div class="hash-example p-3 bg-light rounded">
+                                                    <small class="text-muted">Contoh Hash SHA-256:</small>
+                                                    <div class="font-monospace small mt-2">
+                                                        e3b0c44298fc1c14...<br>
+                                                        9afbf4c8996fb924...<br>
+                                                        27ae41e4649b934c...<br>
+                                                        a495991b7852b855
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <pre class="bg-dark text-light p-3 rounded">
+<code># SHA-256 Hashing
+import hashlib
+
+with open('document.pdf', 'rb') as f:
+    pdf_data = f.read()
+
+pdf_hash = hashlib.sha256(pdf_data).digest()
+pdf_hash_hex = hashlib.sha256(pdf_data).hexdigest()</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="step-number bg-success text-white">
+                                    <h2 class="mb-0">2</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Arrow 2 -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="process-arrow">
+                                    <i class="bi bi-arrow-down-circle-fill text-success" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-2 text-center">
+                                <div class="step-number bg-warning text-white">
+                                    <h2 class="mb-0">3</h2>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-white">
+                                        <h4 class="mb-0"><i class="bi bi-lock"></i> Enkripsi Hash dengan Private Key</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Hash dokumen dienkripsi menggunakan Private Key RSA untuk membuat tanda tangan digital:</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6><i class="bi bi-shield-check"></i> Proses Enkripsi</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Hash → Input untuk enkripsi</li>
+                                                            <li>Private Key → Kunci enkripsi</li>
+                                                            <li>Padding PSS → Skema padding untuk keamanan</li>
+                                                            <li>Signature → Output enkripsi (tanda tangan)</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6><i class="bi bi-safe"></i> Fitur Keamanan</h6>
+                                                        <ul class="mb-0">
+                                                            <li><strong>PSS Padding:</strong> Probabilistic Signature Scheme</li>
+                                                            <li><strong>MGF1:</strong> Mask Generation Function</li>
+                                                            <li><strong>Salt Length:</strong> MAX_LENGTH untuk keamanan optimal</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <pre class="bg-dark text-light p-3 rounded">
+<code># Digital Signature Creation
+signature = private_key.sign(
+    pdf_hash,
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
+)
+
+# Encode to Base64
+signature_b64 = base64.b64encode(signature).decode('utf-8')</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Arrow 3 -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="process-arrow">
+                                    <i class="bi bi-arrow-down-circle-fill text-warning" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-10">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h4 class="mb-0"><i class="bi bi-file-earmark-pdf"></i> Embed Signature ke PDF</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Tanda tangan digital disematkan ke dalam metadata dokumen PDF:</p>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h6><i class="bi bi-database"></i> Metadata yang Disimpan:</h6>
+                                                <ul>
+                                                    <li><strong>Signature:</strong> Tanda tangan dalam format Base64</li>
+                                                    <li><strong>Timestamp:</strong> Waktu penandatanganan</li>
+                                                    <li><strong>Algorithm:</strong> RSA-SHA256-PSS</li>
+                                                    <li><strong>Hash:</strong> Hash dokumen asli</li>
+                                                    <li><strong>Key Size:</strong> 2048-bit</li>
+                                                    <li><strong>Document Info:</strong> Informasi tambahan dokumen</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6><i class="bi bi-plus-circle"></i> Tambahan:</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Halaman verifikasi ditambahkan</li>
+                                                            <li>QR code signature digenerate</li>
+                                                            <li>Laporan verifikasi dibuat</li>
+                                                            <li>Dokumen asli tidak dimodifikasi</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <pre class="bg-dark text-light p-3 rounded">
+<code># PDF Metadata Integration
+metadata = {
+    'signature': signature_b64,
+    'timestamp': '2024-01-15T10:30:00Z',
+    'algorithm': 'RSA-SHA256-PSS',
+    'hash': base64_hash,
+    'hash_hex': pdf_hash_hex,
+    'key_size': 2048
+}
+
+# Add to PDF
+writer.add_metadata({
+    '/Signature': json.dumps(metadata)
+})</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="step-number bg-danger text-white">
+                                    <h2 class="mb-0">4</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Arrow 4 -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="process-arrow">
+                                    <i class="bi bi-arrow-down-circle-fill text-danger" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-2 text-center">
+                                <div class="step-number bg-info text-white">
+                                    <h2 class="mb-0">5</h2>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h4 class="mb-0"><i class="bi bi-check-circle"></i> Verifikasi Tanda Tangan</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Proses verifikasi untuk memvalidasi keaslian dan integritas tanda tangan:</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="text-success"><i class="bi bi-check-lg"></i> Proses Verifikasi</h6>
+                                                        <ol class="mb-0">
+                                                            <li>Ekstrak signature dari PDF</li>
+                                                            <li>Dekripsi dengan Public Key</li>
+                                                            <li>Hitung hash dokumen saat ini</li>
+                                                            <li>Bandingkan hash yang didekripsi dengan hash baru</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6 class="text-danger"><i class="bi bi-x-lg"></i> Jika Gagal</h6>
+                                                        <ul class="mb-0">
+                                                            <li>Dokumen telah diubah</li>
+                                                            <li>Signature tidak valid</li>
+                                                            <li>Public key tidak cocok</li>
+                                                            <li>Timestamp tidak valid</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <pre class="bg-dark text-light p-3 rounded">
+<code># Signature Verification
+try:
+    public_key.verify(
+        signature,
+        current_hash,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+    print("✅ Signature VALID")
+except InvalidSignature:
+    print("❌ Signature INVALID")</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Diagram -->
+                    <div class="card mt-5">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0"><i class="bi bi-diagram-3-fill"></i> Diagram Alur Visual</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="process-diagram mb-4">
+                                    <div class="row">
+                                        <!-- Step 1 -->
+                                        <div class="col-md-2 mb-3">
+                                            <div class="process-node bg-primary text-white">
+                                                <i class="bi bi-key-fill display-6 mb-2"></i>
+                                                <h6>Generate Keys</h6>
+                                                <small>RSA 2048-bit</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 text-center align-self-center">
+                                            <i class="bi bi-arrow-right text-primary" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        
+                                        <!-- Step 2 -->
+                                        <div class="col-md-2 mb-3">
+                                            <div class="process-node bg-success text-white">
+                                                <i class="bi bi-hash display-6 mb-2"></i>
+                                                <h6>Hash Document</h6>
+                                                <small>SHA-256</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 text-center align-self-center">
+                                            <i class="bi bi-arrow-right text-success" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        
+                                        <!-- Step 3 -->
+                                        <div class="col-md-2 mb-3">
+                                            <div class="process-node bg-warning text-white">
+                                                <i class="bi bi-lock-fill display-6 mb-2"></i>
+                                                <h6>Encrypt Hash</h6>
+                                                <small>Private Key</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 text-center align-self-center">
+                                            <i class="bi bi-arrow-right text-warning" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        
+                                        <!-- Step 4 -->
+                                        <div class="col-md-2 mb-3">
+                                            <div class="process-node bg-danger text-white">
+                                                <i class="bi bi-file-earmark-pdf display-6 mb-2"></i>
+                                                <h6>Embed in PDF</h6>
+                                                <small>Metadata</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 text-center align-self-center">
+                                            <i class="bi bi-arrow-right text-danger" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        
+                                        <!-- Step 5 -->
+                                        <div class="col-md-2 mb-3">
+                                            <div class="process-node bg-info text-white">
+                                                <i class="bi bi-check-circle-fill display-6 mb-2"></i>
+                                                <h6>Verify</h6>
+                                                <small>Public Key</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Analysis -->
+                    <div class="card mt-4">
+                        <div class="card-header bg-warning text-white">
+                            <h4 class="mb-0"><i class="bi bi-shield-exclamation"></i> Analisis Keamanan</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="text-success"><i class="bi bi-check-circle"></i> Kekuatan Sistem</h6>
+                                            <ul>
+                                                <li><strong>RSA 2048-bit:</strong> Tingkat keamanan tinggi, tahan brute-force</li>
+                                                <li><strong>SHA-256:</strong> Fungsi hash kriptografi yang kuat</li>
+                                                <li><strong>PSS Padding:</strong> Meningkatkan keamanan terhadap serangan</li>
+                                                <li><strong>Timestamp:</strong> Mencegah replay attack</li>
+                                                <li><strong>Non-repudiation:</strong> Private key unik mencegah penyangkalan</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="text-danger"><i class="bi bi-exclamation-triangle"></i> Potensi Serangan & Mitigasi</h6>
+                                            <table class="table table-sm">
+                                                <tr>
+                                                    <th>Serangan</th>
+                                                    <th>Mitigasi</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brute-force Attack</td>
+                                                    <td>RSA 2048-bit security</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hash Collision</td>
+                                                    <td>SHA-256 collision resistant</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Replay Attack</td>
+                                                    <td>Timestamp verification</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Man-in-the-Middle</td>
+                                                    <td>Digital signature protection</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Key Compromise</td>
+                                                    <td>Secure key storage</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conclusion -->
+                    <div class="alert alert-success mt-4">
+                        <h5><i class="bi bi-lightbulb-fill"></i> Kesimpulan Proses</h5>
+                        <p class="mb-0">
+                            Sistem tanda tangan digital ini menggunakan pendekatan <strong>hybrid cryptography</strong> 
+                            yang menggabungkan kelebihan kriptografi asimetris (RSA) dengan fungsi hash (SHA-256). 
+                            Proses ini memastikan tiga aspek keamanan utama: <strong>Autentikasi</strong> (verifikasi identitas), 
+                            <strong>Integritas</strong> (dokumen tidak berubah), dan <strong>Non-repudiasi</strong> 
+                            (tidak dapat menyangkal tanda tangan).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.step-number {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.step-number:hover {
+    transform: scale(1.1);
+}
+
+.process-arrow {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.process-node {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.process-node:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.process-diagram .row {
+    align-items: center;
+}
+
+.hash-example {
+    border-left: 4px solid #28a745;
+    font-family: 'Courier New', monospace;
+}
+
+.font-monospace {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+pre code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

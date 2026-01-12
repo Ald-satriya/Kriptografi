@@ -1,0 +1,16 @@
+{
+  "signature": "bSe/SLbZk9UaU3DgU9TpG7PCtRCqJhcisBTII2M+FPE9sovIuPyTGi2yuHawun1jXU7HHF4RK2AshwwJJTSL+idMTRmqWtAbuUNmis+tIqHFZm2VfihB+Qg7Ljz9Lo8oEm4SAA9zyqTRj2h/Z+48XL/5RT+p7MAlXJbKU4nYqgCyifdUk5O8xUZhgIQKvW0/RhzGGjGbZvaHCi29iLcdfnF/Ux/VtvQejDUoZguD68dRrXFTB/U+z2EAIee5fRmaXTEDd2Boq5YalGrJQiAoanlIPXYl2MDVgbPaialfgpkzWx1dXsevNX1YZMtpe+NWBIRfaC10y4/R+ei5/JuF7A==",
+  "timestamp": "2026-01-12T19:57:22.787669",
+  "algorithm": "RSA-SHA256-PSS",
+  "hash": "yG4+TioXfFE6QZQJNPJaLh+ePIqKy+DzpHpvsrl4JoU=",
+  "hash_hex": "c86e3e4e2a177c513a41940934f25a2e1f9e3c8a8acbe0f3a47a6fb2b9782685",
+  "key_size": 2048,
+  "document_info": {
+    "title": "Dokumen UAS Kriptografi",
+    "description": "Dokumen ini ditandatangani secara digital untuk keperluan UAS Kriptografi.\nImplementasi menggunakan algoritma RSA 2048-bit dan SHA-256.\n                                        ",
+    "signer": "Mahasiswa Kriptografi",
+    "timestamp": "2026-01-12T12:57:22.791Z"
+  },
+  "signature_length": 256,
+  "hash_algorithm": "SHA-256"
+}

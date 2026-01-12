@@ -1,0 +1,54 @@
+{
+  "test_timestamp": "2026-01-11T08:17:09.753056",
+  "original_file": "test_document_1.pdf",
+  "test_results": [
+    {
+      "test": "Signing",
+      "status": "PASSED",
+      "hash": "fe9406d9b0ae5e7e72b12becd3677bad3c5e3060100448d1721929c70445e9ba",
+      "signed_file": "test_document_1_signed_20260111_081709.pdf"
+    },
+    {
+      "test": "Verification",
+      "status": "FAILED",
+      "verified": false,
+      "message": "Tanda tangan digital INVALID atau tidak cocok"
+    },
+    {
+      "test": "Tamper Detection",
+      "status": "PASSED",
+      "verified": false,
+      "expected": false,
+      "message": "Tanda tangan harus invalid setelah dokumen diubah"
+    }
+  ],
+  "success_rate": 66.66666666666666,
+  "signature_metadata": {
+    "signature": "M8zLHTmfxz9BUkzPMSW2xivBbqUVYMnN80YPiKnwQKIyB2EfHwKoVhySyCSq8dzs2COlCaT3x7kZy52cOkGKb4nhXI0dqn5VnD8cUl1BWI/VzSJ7ME25I1Kd4KLUSy8qnbWNoVUQDZQJsti5YRv4q0vQk1kWgcTqgwPBqFQeu+cSZrnG2RTCYczRcCBEaZTpQg1jz7cROf7852DavCuwr2XCkzMkMgffp38puuA4eZfjeB3R32GXQsXixUNgayXRr2F0xyIdP8riSehbYyjFBJa0yMvZ003gkih96Wa84IZEHao22TtRRH9ORxiZmu0VYgZxv+wq5fDeKNrozW+Zqg==",
+    "timestamp": "2026-01-11T08:17:09.515881",
+    "algorithm": "RSA-SHA256-PSS",
+    "hash": "/pQG2bCuXn5ysSvs02d7rTxeMGAQBEjRchkpxwRF6bo=",
+    "hash_hex": "fe9406d9b0ae5e7e72b12becd3677bad3c5e3060100448d1721929c70445e9ba",
+    "key_size": 2048,
+    "document_info": {
+      "test_type": "complete_test",
+      "purpose": "UAS Kriptografi Testing"
+    },
+    "signature_length": 256,
+    "hash_algorithm": "SHA-256"
+  },
+  "verification_details": {
+    "status": "success",
+    "verified": false,
+    "message": "Tanda tangan digital INVALID atau tidak cocok",
+    "details": {
+      "verified": false,
+      "document_integrity": "UNKNOWN",
+      "authentication": "FAILED",
+      "non_repudiation": "NOT PROVEN"
+    },
+    "document_hash": "0209c20e88bd424112a5eea406f12bd92ed4bbc6172201bfc0e90533419f3e8e",
+    "original_hash": "fe9406d9b0ae5e7e72b12becd3677bad3c5e3060100448d1721929c70445e9ba",
+    "integrity": "Dokumen mungkin telah diubah atau tanda tangan tidak valid"
+  }
+}

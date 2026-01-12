@@ -1,0 +1,11 @@
+{
+  "signature": "pw6rzP4MghEl92rB+SiYk4AJMhLT7GNtcOez2EnUVlbUugO/NhJS9X68dqd7KQoHEIR91Z/4bOXgtjcSmlimoWaEzTXBq12toosoJSSLnz1QdixdUTLXS3fqjdBbTXbz49INTR1a4I5NQ9zvWIwGeWG7M3Au/df2HAIJEpT/mghoIxGnT34v5C9uVsmZgcMDWa4h6AoywOaMMuOExTu8iTB7x1TKgLvA6LwcTmM0sX1oNubZ/hraOCDvBWJNQZgKHojYMkYUPl07jIt+/hCPgeHm2irwNM2aNEwSbJ+6Fr+QmMLn/lUATr7JORz21DzozkAsntQrtvL7dMHrGx+9hQ==",
+  "timestamp": "2026-01-12T20:35:30.753530",
+  "algorithm": "RSA-SHA256-PSS",
+  "hash": "lCQD/7vkNVZYPBSYHsR+rLjj7pzgfxFrWrpTvjxjbv8=",
+  "hash_hex": "942403ffbbe43556583c14981ec47eacb8e3ee9ce07f116b5aba53be3c636eff",
+  "key_size": 2048,
+  "document_info": {},
+  "signature_length": 256,
+  "hash_algorithm": "SHA-256"
+}

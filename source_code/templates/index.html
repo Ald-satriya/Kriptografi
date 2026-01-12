@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Digital Signature System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="card shadow-lg animate__animated animate__fadeIn">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="display-5 mb-3"><i class="bi bi-shield-check"></i> Digital Signature PDF System</h1>
+                    <p class="lead mb-0">Implementasi Tanda Tangan Digital dengan RSA & SHA-256 untuk UAS Kriptografi</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-file-earmark-lock display-4 text-primary mb-3"></i>
+                                    <h5>PDF Signing</h5>
+                                    <p class="card-text">Buat tanda tangan digital untuk dokumen PDF</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-success">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-file-earmark-check display-4 text-success mb-3"></i>
+                                    <h5>Verification</h5>
+                                    <p class="card-text">Verifikasi keaslian tanda tangan digital</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-info">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-shield display-4 text-info mb-3"></i>
+                                    <h5>Security</h5>
+                                    <p class="card-text">RSA 2048-bit & SHA-256 untuk keamanan maksimal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-lg-8">
+            <!-- System Overview -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeInLeft">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="bi bi-info-circle"></i> System Overview</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-primary">Sistem Tanda Tangan Digital PDF</h5>
+                    <p>Sistem ini mengimplementasikan algoritma kriptografi RSA dengan fungsi hash SHA-256 
+                       untuk membuat dan memverifikasi tanda tangan digital pada dokumen PDF.</p>
+                    
+                    <div class="alert alert-success">
+                        <h6><i class="bi bi-check-circle"></i> Fitur Utama:</h6>
+                        <ul class="mb-0">
+                            <li><strong>Tanpa Login:</strong> Sistem langsung dapat digunakan</li>
+                            <li><strong>RSA 2048-bit:</strong> Algoritma kriptografi asimetris</li>
+                            <li><strong>SHA-256:</strong> Fungsi hash untuk integritas data</li>
+                            <li><strong>Web Interface:</strong> Antarmuka web yang responsif</li>
+                            <li><strong>Export Lengkap:</strong> Semua hasil dapat diexport untuk UAS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeInLeft">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <a href="/execute" class="btn btn-primary w-100 py-3">
+                                <i class="bi bi-gear display-6 mb-2"></i><br>
+                                Execute
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/testing" class="btn btn-success w-100 py-3">
+                                <i class="bi bi-speedometer2 display-6 mb-2"></i><br>
+                                Testing
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/results" class="btn btn-info w-100 py-3">
+                                <i class="bi bi-download display-6 mb-2"></i><br>
+                                Results
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4">
+            <!-- Security Features -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeInRight">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-shield-lock"></i> Security Features</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <strong>Autentikasi:</strong> Verifikasi identitas penandatangan
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <strong>Integritas:</strong> Dokumen tidak dapat diubah tanpa terdeteksi
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <strong>Non-repudiasi:</strong> Penandatangan tidak dapat menyangkal
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <strong>Timestamp:</strong> Pencatatan waktu untuk mencegah replay attack
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <strong>Hash Verification:</strong> SHA-256 untuk integritas data
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- UAS Requirements -->
+            <div class="card shadow-lg animate__animated animate__fadeInRight">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-list-check"></i> UAS Requirements</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-light">
+                        <h6>Persyaratan yang Terpenuhi:</h6>
+                        <ol class="mb-0">
+                            <li>File PDF asli</li>
+                            <li>File tanda tangan digital</li>
+                            <li>Hasil verifikasi</li>
+                            <li>Source code program</li>
+                            <li>Laporan UAS lengkap</li>
+                            <li>Analisis keamanan</li>
+                        </ol>
+                    </div>
+                    <div class="text-center">
+                        <a href="/results" class="btn btn-outline-success">
+                            <i class="bi bi-download"></i> Download All Results
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="card shadow-lg border-0 bg-gradient-primary text-white">
+                <div class="card-body py-5">
+                    <h3 class="mb-4">Ready to Start Your UAS Project?</h3>
+                    <p class="lead mb-4">Semua yang Anda butuhkan untuk UAS Kriptografi sudah tersedia di sini.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="/execute" class="btn btn-light btn-lg">
+                            <i class="bi bi-play-fill"></i> Get Started
+                        </a>
+                        <a href="/manual" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-book"></i> Read Manual
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 70,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Add animation to cards on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        }
+    });
+}, observerOptions);
+
+// Observe all cards
+document.querySelectorAll('.card').forEach(card => {
+    observer.observe(card);
+});
+</script>
+{% endblock %}

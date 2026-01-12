@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2026-01-11T10:15:01.053418",
+    "activity": "KEY_GENERATION",
+    "description": "RSA Key Pair generated",
+    "data": {
+      "key_size": 2048,
+      "timestamp": "2026-01-11T10:15:01.053418"
+    }
+  },
+  {
+    "timestamp": "2026-01-11T10:15:01.061129",
+    "activity": "TEST_CREATION",
+    "description": "Test PDFs created",
+    "data": {
+      "test_files": [
+        "test_document_1.pdf",
+        "test_kontrak_2.pdf",
+        "test_sertifikat_3.pdf"
+      ]
+    }
+  }
+]

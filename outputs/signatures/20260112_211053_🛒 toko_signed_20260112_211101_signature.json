@@ -1,0 +1,16 @@
+{
+  "signature": "LwVkt/bCloN9Z6lZ9m2IHX+SEe5QXHJQoalZuc5ZayKr1pqmK2m9BD74ZhxmfPLtp07o98f/vpXhPrt++LMqQirbF7gxJ7JPXP3QpdymGuGH5ychzfp9SIgwIlnzvVyAO3uIR0RPvq64lQ+JnXf1YAMaR73wyKw5sgoUrQRVRky2CBXM/teiDJon7BC58UBaQwzmY2VAJjZPm8te4arZFPIL/Q3spo0R9U10D1/L1e8PeMF/yvLOSer6i74i1lyXkG4ln43oGHg2/EvVg+q1B7Ey+Cr8lzBmx3esmKin8PwkH470Dix6PPqk87tLyNoxAxSLdiSFFo4zqLZ8ENDJzQ==",
+  "timestamp": "2026-01-12T21:11:01.517126",
+  "algorithm": "RSA-SHA256-PSS",
+  "hash": "RZ/kKc7k+4AmWAzven4JgoQK2uMaym9S3v6UpfeXbh0=",
+  "hash_hex": "459fe429cee4fb8026580cef7a7e0982840adae31aca6f52defe94a5f7976e1d",
+  "key_size": 2048,
+  "document_info": {
+    "title": "Dokumen UAS Kriptografi",
+    "description": "Dokumen ini ditandatangani secara digital untuk keperluan UAS Kriptografi.\nImplementasi menggunakan algoritma RSA 2048-bit dan SHA-256.\n                                        ",
+    "signer": "Aldi Satriya",
+    "timestamp": "2026-01-12T14:11:01.476Z"
+  },
+  "signature_length": 256,
+  "hash_algorithm": "SHA-256"
+}

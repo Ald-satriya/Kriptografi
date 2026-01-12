@@ -1,0 +1,76 @@
+{
+  "test_timestamp": "2026-01-10T22:44:40.792772",
+  "total_tests": 6,
+  "passed_tests": 5,
+  "failed_tests": 1,
+  "success_rate": 83.33333333333334,
+  "test_results": [
+    {
+      "test": "RSA Key Generation",
+      "status": "PASSED",
+      "message": "Generated 2048-bit RSA keys (Private: 1704 bytes, Public: 451 bytes)",
+      "timestamp": "2026-01-10T22:44:40.244517",
+      "details": {
+        "private_key_size": 1704,
+        "public_key_size": 451
+      }
+    },
+    {
+      "test": "SHA-256 Hashing",
+      "status": "PASSED",
+      "message": "SHA-256 hash generated successfully (64 chars)",
+      "timestamp": "2026-01-10T22:44:40.250925",
+      "details": {
+        "hash_hex": "2a24eb769ac151ab8e1938e79eb8d06633e507ccb72c2c945a5939279fa42355",
+        "hash_length": 32
+      }
+    },
+    {
+      "test": "Signature Creation",
+      "status": "PASSED",
+      "message": "Digital signature created successfully (256 bytes)",
+      "timestamp": "2026-01-10T22:44:40.344005",
+      "details": {
+        "signature_length": 256,
+        "document_size": 1485,
+        "metadata_keys": [
+          "signature",
+          "timestamp",
+          "algorithm",
+          "hash",
+          "signature_length"
+        ]
+      }
+    },
+    {
+      "test": "Signature Verification",
+      "status": "FAILED",
+      "message": "Signature verification failed (INVALID)",
+      "timestamp": "2026-01-10T22:44:40.434644",
+      "details": {}
+    },
+    {
+      "test": "Tamper Detection",
+      "status": "PASSED",
+      "message": "Successfully detected document tampering",
+      "timestamp": "2026-01-10T22:44:40.530525",
+      "details": {
+        "original_hash": "227138bb5780a8ba",
+        "tampered_hash": "320c94612b350bea",
+        "hash_match": false
+      }
+    },
+    {
+      "test": "PDF Integration",
+      "status": "PASSED",
+      "message": "PDF signing and metadata integration successful",
+      "timestamp": "2026-01-10T22:44:40.791204",
+      "details": {
+        "original_size": 1436,
+        "signed_size": 1779,
+        "metadata_present": true,
+        "signature_length": 256
+      }
+    }
+  ]
+}

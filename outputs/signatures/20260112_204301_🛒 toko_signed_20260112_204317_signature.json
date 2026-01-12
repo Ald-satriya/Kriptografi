@@ -1,0 +1,16 @@
+{
+  "signature": "KrDPpHVzOibHJoH2soSP35S8ZrsVZX8j6czpY5Z4SSMPoaXu9RbseVe9Ysmxuhmn5v6Fbgk8QamF8CCC48WQkELUIDBudxFefrgNVBx/bph5f8/mNwfGx+04Vt5xXCMNpNzZe9wM39HRKg/6G/rxZhDDC9gyCgF65VSFREIv8vdt1/ClzF0XGmTk+Z8ynqk6WUq5yuETILZCQNJJBB2X0P6LmwrDR70wbD7pyyrewT9PvnMcYD6lwVbsz4DCZ/okbAjk6yuq+PscTVTx+ns/JSZZf2YfroUIdQueJfgHhakZsanZLDJG3sn6KCg6pOvsx1CWRexFdIF15MNdhKksKA==",
+  "timestamp": "2026-01-12T20:43:17.260545",
+  "algorithm": "RSA-SHA256-PSS",
+  "hash": "RZ/kKc7k+4AmWAzven4JgoQK2uMaym9S3v6UpfeXbh0=",
+  "hash_hex": "459fe429cee4fb8026580cef7a7e0982840adae31aca6f52defe94a5f7976e1d",
+  "key_size": 2048,
+  "document_info": {
+    "title": "TOKK KTIP",
+    "description": "Dokumen ini ditandatangani secara digital untuk keperluan UAS Kriptografi.\nImplementasi menggunakan algoritma RSA 2048-bit dan SHA-256.\n                                        ",
+    "signer": "Ael",
+    "timestamp": "2026-01-12T13:43:17.237Z"
+  },
+  "signature_length": 256,
+  "hash_algorithm": "SHA-256"
+}

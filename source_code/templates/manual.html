@@ -1,0 +1,966 @@
+{% extends "base.html" %}
+
+{% block title %}Manual Book - Digital Signature{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Main Card -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeIn">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0"><i class="bi bi-book"></i> Manual Book - Panduan Lengkap</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Cover Page -->
+                    <div class="text-center mb-5 py-4 border-bottom">
+                        <h1 class="display-4 text-primary mb-3">MANUAL BOOK</h1>
+                        <h3 class="text-secondary">Sistem Tanda Tangan Digital PDF</h3>
+                        <p class="lead mt-3">Implementasi RSA & SHA-256 untuk UAS Kriptografi</p>
+                        <div class="mt-4">
+                            <span class="badge bg-primary me-2">Version 1.0</span>
+                            <span class="badge bg-success me-2">UAS Project</span>
+                            <span class="badge bg-info">2024</span>
+                        </div>
+                    </div>
+
+                    <!-- Table of Contents -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-list-ol"></i> Daftar Isi</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter1" class="text-decoration-none">1. Pendahuluan</a>
+                                            <span class="badge bg-primary rounded-pill">1</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter2" class="text-decoration-none">2. Instalasi Sistem</a>
+                                            <span class="badge bg-primary rounded-pill">2</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter3" class="text-decoration-none">3. Penggunaan Sistem</a>
+                                            <span class="badge bg-primary rounded-pill">3</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter4" class="text-decoration-none">4. Panduan Eksekusi</a>
+                                            <span class="badge bg-primary rounded-pill">4</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter5" class="text-decoration-none">5. Dokumentasi API</a>
+                                            <span class="badge bg-primary rounded-pill">5</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter6" class="text-decoration-none">6. Troubleshooting</a>
+                                            <span class="badge bg-primary rounded-pill">6</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter7" class="text-decoration-none">7. FAQ</a>
+                                            <span class="badge bg-primary rounded-pill">7</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="#chapter8" class="text-decoration-none">8. Referensi Teknis</a>
+                                            <span class="badge bg-primary rounded-pill">8</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 1: Introduction -->
+                    <div id="chapter1" class="chapter-section">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">1. PENDAHULUAN</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-8">
+                                <h4>1.1 Tentang Sistem</h4>
+                                <p>Sistem Tanda Tangan Digital PDF adalah aplikasi web yang mengimplementasikan 
+                                   algoritma kriptografi RSA 2048-bit dan fungsi hash SHA-256 untuk membuat 
+                                   dan memverifikasi tanda tangan digital pada dokumen PDF.</p>
+                                
+                                <h4 class="mt-4">1.2 Tujuan Pengembangan</h4>
+                                <ul>
+                                    <li>Memenuhi persyaratan UAS Mata Kuliah Kriptografi</li>
+                                    <li>Implementasi praktis algoritma RSA dan SHA-256</li>
+                                    <li>Membuat sistem tanda tangan digital yang user-friendly</li>
+                                    <li>Menghasilkan laporan lengkap untuk penilaian</li>
+                                </ul>
+                                
+                                <h4 class="mt-4">1.3 Fitur Utama</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <h6><i class="bi bi-check-circle text-success"></i> Core Features</h6>
+                                                <ul class="small mb-0">
+                                                    <li>Pembuatan tanda tangan digital</li>
+                                                    <li>Verifikasi tanda tangan</li>
+                                                    <li>PDF document processing</li>
+                                                    <li>RSA key generation</li>
+                                                    <li>SHA-256 hashing</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <h6><i class="bi bi-star text-warning"></i> Advanced Features</h6>
+                                                <ul class="small mb-0">
+                                                    <li>QR code generation</li>
+                                                    <li>Auto-report generation</li>
+                                                    <li>Complete test suite</li>
+                                                    <li>Export semua hasil</li>
+                                                    <li>Activity logging</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="bi bi-info-circle"></i> Spesifikasi Teknis</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th>Platform</th>
+                                                <td>Web Application</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Backend</th>
+                                                <td>Python Flask</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Algorithm</th>
+                                                <td>RSA 2048-bit</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Hash Function</th>
+                                                <td>SHA-256</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Database</th>
+                                                <td>File-based JSON</td>
+                                            </tr>
+                                            <tr>
+                                                <th>License</th>
+                                                <td>Educational</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 2: Installation -->
+                    <div id="chapter2" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">2. INSTALASI SISTEM</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <h4 class="mt-4">2.1 Persyaratan Sistem</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Komponen</th>
+                                        <th>Minimum</th>
+                                        <th>Rekomendasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Python</strong></td>
+                                        <td>3.8</td>
+                                        <td>3.10 atau terbaru</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RAM</strong></td>
+                                        <td>2GB</td>
+                                        <td>4GB</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Storage</strong></td>
+                                        <td>100MB</td>
+                                        <td>500MB</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Browser</strong></td>
+                                        <td>Chrome 80+</td>
+                                        <td>Chrome/Firefox terbaru</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OS</strong></td>
+                                        <td>Windows 10 / Ubuntu 18.04</td>
+                                        <td>Windows 11 / Ubuntu 22.04</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <h4 class="mt-4">2.2 Langkah Instalasi</h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Step 1: Clone/Download Project</h5>
+                                <pre class="bg-dark text-light p-3 rounded"><code># Clone dari repository
+git clone https://github.com/uas-kriptografi/digital-signature.git
+cd digital-signature
+
+# Atau download ZIP dan extract
+unzip digital-signature-project.zip
+cd digital-signature-project</code></pre>
+                                
+                                <h5 class="mt-4">Step 2: Install Dependencies</h5>
+                                <pre class="bg-dark text-light p-3 rounded"><code># Gunakan virtual environment (recommended)
+python -m venv venv
+
+# Aktifkan virtual environment
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# Install semua dependencies
+pip install -r requirements.txt</code></pre>
+                                
+                                <h5 class="mt-4">Step 3: Konfigurasi</h5>
+                                <pre class="bg-dark text-light p-3 rounded"><code># Struktur folder otomatis dibuat
+# Pastikan folder berikut ada:
+# - uploads/
+# - test_pdfs/
+# - outputs/signatures/
+# - outputs/reports/
+
+# Jika tidak ada, buat manual
+mkdir -p uploads test_pdfs outputs/signatures outputs/reports</code></pre>
+                                
+                                <h5 class="mt-4">Step 4: Jalankan Sistem</h5>
+                                <pre class="bg-dark text-light p-3 rounded"><code># Jalankan aplikasi Flask
+python app.py
+
+# Output yang diharapkan:
+# Digital Signature System - UAS Kriptografi
+# Server running on http://localhost:5000
+# Test PDFs created in: test_pdfs/
+# Outputs saved in: outputs/</code></pre>
+                                
+                                <h5 class="mt-4">Step 5: Akses Aplikasi</h5>
+                                <p>Buka browser dan akses: <a href="http://localhost:5000" target="_blank">http://localhost:5000</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 3: Usage -->
+                    <div id="chapter3" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">3. PENGGUNAAN SISTEM</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-house"></i> Home Page</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Dashboard utama sistem yang menampilkan:</p>
+                                        <ul>
+                                            <li>Overview sistem</li>
+                                            <li>Fitur utama</li>
+                                            <li>Quick actions</li>
+                                            <li>Security features</li>
+                                            <li>UAS requirements checklist</li>
+                                        </ul>
+                                        <div class="alert alert-info small">
+                                            <i class="bi bi-lightbulb"></i>
+                                            <strong>Tip:</strong> Gunakan menu navigasi untuk berpindah antar halaman.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-gear"></i> Execute Page</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Halaman utama untuk eksekusi:</p>
+                                        <ul>
+                                            <li>Upload PDF document</li>
+                                            <li>Generate RSA keys</li>
+                                            <li>Sign PDF documents</li>
+                                            <li>Verify signatures</li>
+                                            <li>Download results</li>
+                                        </ul>
+                                        <div class="alert alert-info small">
+                                            <i class="bi bi-lightbulb"></i>
+                                            <strong>Tip:</strong> Selalu generate keys baru untuk keamanan maksimal.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-speedometer2"></i> Testing Page</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Halaman untuk pengujian sistem:</p>
+                                        <ul>
+                                            <li>Test documents</li>
+                                            <li>Complete test suite</li>
+                                            <li>Security analysis</li>
+                                            <li>Export results</li>
+                                        </ul>
+                                        <div class="alert alert-info small">
+                                            <i class="bi bi-lightbulb"></i>
+                                            <strong>Tip:</strong> Jalankan complete test sebelum menggunakan sistem.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">3.2 Alur Kerja Standar</h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <ol>
+                                    <li><strong>Generate Keys:</strong> Klik "Generate RSA Keys" di halaman Execute</li>
+                                    <li><strong>Upload PDF:</strong> Upload file PDF atau gunakan test PDF</li>
+                                    <li><strong>Sign Document:</strong> Klik "Sign PDF Document"</li>
+                                    <li><strong>Verify Signature:</strong> Klik "Verify Signature" untuk validasi</li>
+                                    <li><strong>Download Results:</strong> Download semua hasil yang diperlukan</li>
+                                    <li><strong>Generate Report:</strong> Buat laporan UAS di halaman Results</li>
+                                    <li><strong>Export All:</strong> Export semua file untuk pengumpulan</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 4: Execution Guide -->
+                    <div id="chapter4" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">4. PANDUAN EKSEKUSI DETAIL</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <div class="accordion" id="executionGuide">
+                            <!-- Step 1 -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#step1">
+                                        4.1 Generate RSA Keys
+                                    </button>
+                                </h2>
+                                <div id="step1" class="accordion-collapse collapse show" data-bs-parent="#executionGuide">
+                                    <div class="accordion-body">
+                                        <p><strong>Fungsi:</strong> Membuat pasangan kunci RSA 2048-bit (public & private key)</p>
+                                        <p><strong>Langkah:</strong></p>
+                                        <ol>
+                                            <li>Buka halaman <strong>Execute</strong></li>
+                                            <li>Klik tombol <strong>"Generate RSA Keys"</strong></li>
+                                            <li>Tunggu hingga proses selesai (1-2 detik)</li>
+                                            <li>Keys akan ditampilkan di section "Show/Hide RSA Keys"</li>
+                                        </ol>
+                                        <div class="alert alert-warning">
+                                            <i class="bi bi-exclamation-triangle"></i>
+                                            <strong>Peringatan:</strong> Simpan private key dengan aman. Private key bersifat rahasia!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2 -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step2">
+                                        4.2 Upload PDF Document
+                                    </button>
+                                </h2>
+                                <div id="step2" class="accordion-collapse collapse" data-bs-parent="#executionGuide">
+                                    <div class="accordion-body">
+                                        <p><strong>Fungsi:</strong> Mengunggah dokumen PDF untuk ditandatangani</p>
+                                        <p><strong>Langkah:</strong></p>
+                                        <ol>
+                                            <li>Klik <strong>"Choose File"</strong> dan pilih file PDF</li>
+                                            <li>Klik tombol <strong>"Upload"</strong></li>
+                                            <li>Tunggu hingga upload selesai</li>
+                                            <li>Informasi file akan ditampilkan</li>
+                                        </ol>
+                                        <p><strong>Alternatif:</strong></p>
+                                        <ul>
+                                            <li>Gunakan <strong>"Buat Demo PDF"</strong> untuk membuat dokumen test</li>
+                                            <li>Gunakan <strong>"Lihat Test PDFs"</strong> untuk menggunakan dokumen test yang sudah ada</li>
+                                        </ul>
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-info-circle"></i>
+                                            <strong>Info:</strong> Maksimal ukuran file 16MB. Hash SHA-256 akan dihitung otomatis.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3 -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step3">
+                                        4.3 Sign PDF Document
+                                    </button>
+                                </h2>
+                                <div id="step3" class="accordion-collapse collapse" data-bs-parent="#executionGuide">
+                                    <div class="accordion-body">
+                                        <p><strong>Fungsi:</strong> Membuat tanda tangan digital untuk dokumen PDF</p>
+                                        <p><strong>Langkah:</strong></p>
+                                        <ol>
+                                            <li>Pastikan file sudah terupload</li>
+                                            <li>Isi informasi dokumen (opsional)</li>
+                                            <li>Klik tombol <strong>"Sign PDF Document"</strong></li>
+                                            <li>Tunggu proses signing selesai</li>
+                                            <li>Hasil akan ditampilkan di section Results</li>
+                                        </ol>
+                                        <p><strong>Proses yang terjadi:</strong></p>
+                                        <ul>
+                                            <li>Dokumen di-hash menggunakan SHA-256</li>
+                                            <li>Hash dienkripsi dengan private key RSA</li>
+                                            <li>Signature disimpan dalam metadata PDF</li>
+                                            <li>QR code digenerate</li>
+                                            <li>Laporan verifikasi dibuat</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4 -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step4">
+                                        4.4 Verify Signature
+                                    </button>
+                                </h2>
+                                <div id="step4" class="accordion-collapse collapse" data-bs-parent="#executionGuide">
+                                    <div class="accordion-body">
+                                        <p><strong>Fungsi:</strong> Memverifikasi keaslian tanda tangan digital</p>
+                                        <p><strong>Langkah:</strong></p>
+                                        <ol>
+                                            <li>Setelah signing, klik <strong>"Verify Signature"</strong></li>
+                                            <li>Tunggu proses verifikasi</li>
+                                            <li>Hasil akan ditampilkan</li>
+                                            <li>Status "VALID" atau "INVALID"</li>
+                                        </ol>
+                                        <p><strong>Proses verifikasi:</strong></p>
+                                        <ul>
+                                            <li>Signature diekstrak dari PDF</li>
+                                            <li>Signature didekripsi dengan public key</li>
+                                            <li>Hash dokumen dihitung ulang</li>
+                                            <li>Hash yang didekripsi dibandingkan dengan hash baru</li>
+                                        </ul>
+                                        <div class="alert alert-success">
+                                            <i class="bi bi-check-circle"></i>
+                                            <strong>Jika valid:</strong> Autentikasi, Integritas, dan Non-repudiasi terjamin.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 5 -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step5">
+                                        4.5 Download Results
+                                    </button>
+                                </h2>
+                                <div id="step5" class="accordion-collapse collapse" data-bs-parent="#executionGuide">
+                                    <div class="accordion-body">
+                                        <p><strong>Fungsi:</strong> Mengunduh semua hasil yang dihasilkan</p>
+                                        <p><strong>File yang dapat diunduh:</strong></p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul>
+                                                    <li><strong>Signed PDF:</strong> PDF dengan tanda tangan digital</li>
+                                                    <li><strong>Signature File:</strong> File JSON berisi signature</li>
+                                                    <li><strong>QR Code:</strong> Gambar QR code untuk signature</li>
+                                                    <li><strong>Verification Report:</strong> Laporan hasil verifikasi</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul>
+                                                    <li><strong>RSA Keys:</strong> Public dan private key</li>
+                                                    <li><strong>Activity Log:</strong> Log semua aktivitas sistem</li>
+                                                    <li><strong>UAS Report:</strong> Laporan lengkap untuk UAS</li>
+                                                    <li><strong>All Results (ZIP):</strong> Semua file dalam satu ZIP</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 5: API Documentation -->
+                    <div id="chapter5" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">5. DOKUMENTASI API</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <p>Berikut adalah endpoint API yang tersedia dalam sistem:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Endpoint</th>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Response</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>/api/generate-keys</code></td>
+                                        <td>GET</td>
+                                        <td>Generate RSA key pair</td>
+                                        <td>{status, private_key, public_key, message}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/upload-pdf</code></td>
+                                        <td>POST</td>
+                                        <td>Upload PDF file</td>
+                                        <td>{status, filename, filepath, file_hash, message}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/sign-pdf</code></td>
+                                        <td>POST</td>
+                                        <td>Sign PDF document</td>
+                                        <td>{status, signed_pdf, signature_data, qr_code, report, message}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/verify-pdf</code></td>
+                                        <td>POST</td>
+                                        <td>Verify signature</td>
+                                        <td>{status, verified, message, details, report}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/get-test-pdfs</code></td>
+                                        <td>GET</td>
+                                        <td>Get list of test PDFs</td>
+                                        <td>{status, test_files, count}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/run-complete-test</code></td>
+                                        <td>POST</td>
+                                        <td>Run complete test suite</td>
+                                        <td>{status, test_results, success_rate, report_file}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/export-results</code></td>
+                                        <td>GET</td>
+                                        <td>Export all results as ZIP</td>
+                                        <td>ZIP file download</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/api/get-activity-log</code></td>
+                                        <td>GET</td>
+                                        <td>Get system activity log</td>
+                                        <td>{status, log_entries, total_entries}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 6: Troubleshooting -->
+                    <div id="chapter6" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">6. TROUBLESHOOTING</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <div class="accordion" id="troubleshooting">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#issue1">
+                                        Issue 1: Module tidak ditemukan
+                                    </button>
+                                </h2>
+                                <div id="issue1" class="accordion-collapse collapse show" data-bs-parent="#troubleshooting">
+                                    <div class="accordion-body">
+                                        <p><strong>Gejala:</strong> Error "ModuleNotFoundError" saat menjalankan app.py</p>
+                                        <p><strong>Penyebab:</strong> Dependencies Python belum terinstall</p>
+                                        <p><strong>Solusi:</strong></p>
+                                        <pre class="bg-dark text-light p-3 rounded"><code># Install semua dependencies
+pip install -r requirements.txt
+
+# Jika masih error, install manual
+pip install Flask cryptography PyPDF2 reportlab qrcode pandas matplotlib</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue2">
+                                        Issue 2: Port 5000 sudah digunakan
+                                    </button>
+                                </h2>
+                                <div id="issue2" class="accordion-collapse collapse" data-bs-parent="#troubleshooting">
+                                    <div class="accordion-body">
+                                        <p><strong>Gejala:</strong> Error "Address already in use"</p>
+                                        <p><strong>Penyebab:</strong> Port 5000 sedang digunakan aplikasi lain</p>
+                                        <p><strong>Solusi:</strong></p>
+                                        <pre class="bg-dark text-light p-3 rounded"><code># Ganti port di app.py
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5001)  # Ganti port
+
+# Atau matikan proses yang menggunakan port 5000
+# Windows:
+netstat -ano | findstr :5000
+taskkill /PID [PID] /F
+
+# Linux/Mac:
+lsof -i :5000
+kill -9 [PID]</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue3">
+                                        Issue 3: PDF tidak bisa dibuka
+                                    </button>
+                                </h2>
+                                <div id="issue3" class="accordion-collapse collapse" data-bs-parent="#troubleshooting">
+                                    <div class="accordion-body">
+                                        <p><strong>Gejala:</strong> Error saat membuka PDF hasil signing</p>
+                                        <p><strong>Penyebab:</strong> File PDF corrupt atau reader tidak support</p>
+                                        <p><strong>Solusi:</strong></p>
+                                        <ul>
+                                            <li>Gunakan Adobe Reader atau browser untuk membuka PDF</li>
+                                            <li>Pastikan file PDF asli valid</li>
+                                            <li>Gunakan test PDF yang disediakan sistem</li>
+                                            <li>Coba sign PDF yang berbeda</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue4">
+                                        Issue 4: Signature verification failed
+                                    </button>
+                                </h2>
+                                <div id="issue4" class="accordion-collapse collapse" data-bs-parent="#troubleshooting">
+                                    <div class="accordion-body">
+                                        <p><strong>Gejala:</strong> Tanda tangan selalu invalid</p>
+                                        <p><strong>Penyebab:</strong></p>
+                                        <ul>
+                                            <li>Dokumen diubah setelah ditandatangani</li>
+                                            <li>Public key tidak sesuai dengan private key</li>
+                                            <li>Signature corrupt</li>
+                                            <li>Hash mismatch</li>
+                                        </ul>
+                                        <p><strong>Solusi:</strong></p>
+                                        <ol>
+                                            <li>Pastikan menggunakan public key yang sesuai</li>
+                                            <li>Jangan ubah dokumen setelah ditandatangani</li>
+                                            <li>Generate keys baru dan coba lagi</li>
+                                            <li>Test dengan tamper detection untuk memastikan</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 7: FAQ -->
+                    <div id="chapter7" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">7. FREQUENTLY ASKED QUESTIONS (FAQ)</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Q: Apakah sistem ini aman untuk dokumen penting?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>A:</strong> Ya, sistem menggunakan algoritma RSA 2048-bit dan SHA-256 yang merupakan standar industri untuk keamanan. Namun, pastikan untuk:
+                                        <ul>
+                                            <li>Menjaga kerahasiaan private key</li>
+                                            <li>Menggunakan keys yang berbeda untuk dokumen berbeda</li>
+                                            <li>Menyimpan backup keys dengan aman</li>
+                                            <li>Menggunakan sistem di lingkungan yang aman</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Q: Apakah dokumen asli akan berubah setelah ditandatangani?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>A:</strong> Tidak, dokumen asli tidak dimodifikasi. Sistem membuat file baru (signed document) yang berisi:
+                                        <ul>
+                                            <li>Semua halaman dokumen asli</li>
+                                            <li>Halaman tambahan untuk informasi signature</li>
+                                            <li>Metadata signature dalam properti PDF</li>
+                                        </ul>
+                                        Dokumen asli tetap utuh dan tersimpan terpisah.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Q: Bagaimana cara mengembalikan dokumen yang sudah ditandatangani?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>A:</strong> Anda tidak bisa "membatalkan" tanda tangan digital. Namun, Anda bisa:
+                                        <ul>
+                                            <li>Memverifikasi keasliannya kapan saja menggunakan public key</li>
+                                            <li>Mendeteksi jika dokumen telah diubah</li>
+                                            <li>Membuat tanda tangan baru dengan keys yang berbeda</li>
+                                            <li>Menyimpan dokumen asli terpisah dari dokumen bertanda tangan</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        Q: File apa saja yang perlu dikumpulkan untuk UAS?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>A:</strong> Semua file yang diperlukan sudah tersedia dalam ZIP package:
+                                        <ol>
+                                            <li>File PDF asli (dalam folder test_pdfs/)</li>
+                                            <li>File PDF bertanda tangan (dalam folder signatures/)</li>
+                                            <li>File tanda tangan digital (.json)</li>
+                                            <li>Hasil verifikasi (laporan PDF)</li>
+                                            <li>Source code program</li>
+                                            <li>Laporan UAS lengkap</li>
+                                            <li>Analisis keamanan</li>
+                                            <li>Public dan private keys</li>
+                                            <li>Log aktivitas sistem</li>
+                                        </ol>
+                                        Download ZIP package dari halaman Results.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 8: Technical References -->
+                    <div id="chapter8" class="chapter-section mt-5">
+                        <div class="chapter-header">
+                            <h2 class="text-primary">8. REFERENSI TEKNIS</h2>
+                            <div class="chapter-divider"></div>
+                        </div>
+                        
+                        <h4 class="mt-4">8.1 Algoritma Kriptografi</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">RSA (Rivest-Shamir-Adleman)</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><strong>Type:</strong> Asymmetric cryptography</li>
+                                            <li><strong>Key Size:</strong> 2048-bit</li>
+                                            <li><strong>Public Exponent:</strong> 65537</li>
+                                            <li><strong>Padding:</strong> PSS with MGF1</li>
+                                            <li><strong>Security:</strong> Based on integer factorization</li>
+                                            <li><strong>Use:</strong> Digital signatures, encryption</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">SHA-256 (Secure Hash Algorithm)</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><strong>Type:</strong> Cryptographic hash function</li>
+                                            <li><strong>Output Size:</strong> 256-bit (64 hex chars)</li>
+                                            <li><strong>Block Size:</strong> 512-bit</li>
+                                            <li><strong>Security:</strong> Collision resistant</li>
+                                            <li><strong>Use:</strong> Data integrity, digital signatures</li>
+                                            <li><strong>Standard:</strong> FIPS 180-4</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">8.2 Library yang Digunakan</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="table-primary">
+                                        <th>Library</th>
+                                        <th>Version</th>
+                                        <th>Purpose</th>
+                                        <th>Documentation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Flask</td>
+                                        <td>3.0.0</td>
+                                        <td>Web framework</td>
+                                        <td><a href="https://flask.palletsprojects.com/" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>cryptography</td>
+                                        <td>41.0.7</td>
+                                        <td>RSA implementation</td>
+                                        <td><a href="https://cryptography.io/" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PyPDF2</td>
+                                        <td>3.0.1</td>
+                                        <td>PDF processing</td>
+                                        <td><a href="https://pypdf2.readthedocs.io/" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>reportlab</td>
+                                        <td>4.0.4</td>
+                                        <td>PDF generation</td>
+                                        <td><a href="https://www.reportlab.com/docs/" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>qrcode</td>
+                                        <td>7.4.2</td>
+                                        <td>QR code generation</td>
+                                        <td><a href="https://pypi.org/project/qrcode/" target="_blank">Link</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <h4 class="mt-4">8.3 Referensi Tambahan</h4>
+                        <ul>
+                            <li><a href="https://tools.ietf.org/html/rfc8017" target="_blank">RFC 8017 - PKCS #1: RSA Cryptography Specifications</a></li>
+                            <li><a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf" target="_blank">FIPS 180-4 - Secure Hash Standard (SHS)</a></li>
+                            <li><a href="https://www.adobe.com/devnet/pdf/pdf_reference.html" target="_blank">PDF Reference - Adobe</a></li>
+                            <li><a href="https://www.cryptool.org/en/" target="_blank">CrypTool - Cryptography Learning Platform</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Conclusion -->
+                    <div class="alert alert-success mt-5">
+                        <h5><i class="bi bi-flag-fill"></i> SELAMAT MENGGUNAKAN!</h5>
+                        <p class="mb-0">
+                            Manual book ini telah menyediakan semua informasi yang diperlukan untuk menggunakan 
+                            Sistem Tanda Tangan Digital PDF. Jika ada pertanyaan tambahan, silakan konsultasikan 
+                            dengan dosen pembimbing atau lihat dokumentasi lengkap dalam source code.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.chapter-section {
+    margin-bottom: 3rem;
+}
+
+.chapter-header {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.chapter-divider {
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #6c757d);
+    width: 100px;
+    margin-top: 5px;
+}
+
+.accordion-button {
+    font-weight: 600;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
+
+pre code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    font-size: 0.75em;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    border-bottom: 1px solid #dee2e6;
+}
+</style>
+{% endblock %}

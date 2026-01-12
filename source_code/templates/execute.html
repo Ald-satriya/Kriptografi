@@ -1,0 +1,979 @@
+{% extends "base.html" %}
+
+{% block title %}Execute - Sign & Verify{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Main Card -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeIn">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="bi bi-gear"></i> Eksekusi Tanda Tangan Digital</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Alert -->
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>Informasi:</strong> Sistem akan otomatis generate key pair RSA saat pertama kali diakses.
+                        Semua aktivitas akan tercatat dalam log sistem.
+                    </div>
+
+                    <div class="row">
+                        <!-- Left Column - Upload & File Info -->
+                        <div class="col-md-6">
+                            <!-- Upload Section -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="bi bi-upload"></i> Upload PDF Document</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Pilih File PDF</label>
+                                        <div class="input-group">
+                                            <input
+  type="file"
+  class="form-control"
+  id="pdfFile"
+  accept="application/pdf"
+>
+
+                                            <button class="btn btn-primary" type="button" id="uploadBtn">
+                                                <i class="bi bi-cloud-upload"></i> Upload
+                                            </button>
+                                        </div>
+                                        <div class="form-text">Maksimal ukuran file: 16MB</div>
+                                    </div>
+
+                                    <div class="border-top pt-3">
+                                        <p class="text-muted mb-2">Atau gunakan dokumen test:</p>
+                                        <div class="d-grid gap-2">
+                                            <button id="createDemoBtn" class="btn btn-outline-secondary">
+                                                <i class="bi bi-magic"></i> Buat Demo PDF
+                                            </button>
+                                            <button id="loadTestFilesBtn" class="btn btn-outline-info">
+                                                <i class="bi bi-folder"></i> Lihat Test PDFs
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- File Information -->
+                           <div id="fileInfo" class="card mb-4" style="display: none;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+            <i class="bi bi-file-text"></i> File Information
+        </h5>
+
+        <!-- EXECUTION STATUS BADGE -->
+        <span id="execStatusBadge" class="badge bg-danger">
+            Not Executed
+        </span>
+    </div>
+
+
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Nama File:</strong></p>
+                                            <p><strong>Ukuran:</strong></p>
+                                            <p><strong>Hash SHA-256:</strong></p>
+                                            <p><strong>Status:</strong></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="fileName" class="text-truncate">-</p>
+                                            <p id="fileSize">-</p>
+                                            <p id="fileHash" class="text-truncate" title="">-</p>
+                                            <p><span id="fileStatus" class="badge bg-warning">Ready</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Document Information Form -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="bi bi-info-circle"></i> Informasi Dokumen</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Judul Dokumen</label>
+                                        <input type="text" class="form-control" id="docTitle" 
+                                               value="Dokumen UAS Kriptografi">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Deskripsi</label>
+                                        <textarea class="form-control" id="docDescription" rows="3">
+Dokumen ini ditandatangani secara digital untuk keperluan UAS Kriptografi.
+Implementasi menggunakan algoritma RSA 2048-bit dan SHA-256.
+                                        </textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Penandatangan</label>
+                                        <input type="text" class="form-control" id="docSigner" 
+                                               value="Mahasiswa Kriptografi">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Actions -->
+                        <div class="col-md-6">
+                            <!-- Action Buttons -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Digital Signature Actions</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-3">
+                                        <button id="generateKeysBtn" class="btn btn-warning btn-lg">
+                                            <i class="bi bi-key"></i> Generate RSA Keys
+                                        </button>
+                                        
+                                        <button id="signBtn" class="btn btn-success btn-lg" disabled>
+                                            <i class="bi bi-pen"></i> Sign PDF Document
+                                        </button>
+                                        
+                                        <button id="verifyBtn" class="btn btn-info btn-lg" disabled>
+                                            <i class="bi bi-check-circle"></i> Verify Signature
+                                        </button>
+                                        
+                                        <button id="downloadBtn" class="btn btn-primary btn-lg" disabled>
+                                            <i class="bi bi-download"></i> Download Results
+                                        </button>
+                                    </div>
+
+                                    <!-- Keys Section -->
+                                    <div class="mt-4">
+                                        <button class="btn btn-outline-secondary w-100" type="button" 
+                                                data-bs-toggle="collapse" data-bs-target="#keysSection">
+                                            <i class="bi bi-key-fill"></i> Show/Hide RSA Keys
+                                        </button>
+                                        
+                                        <div class="collapse mt-3" id="keysSection">
+                                            <div class="card card-body">
+                                                <h6 class="text-success">Public Key:</h6>
+                                                <textarea id="publicKey" class="form-control font-monospace small" 
+                                                          rows="3" readonly style="font-size: 0.8rem;"></textarea>
+                                                
+                                                <h6 class="mt-3 text-danger">Private Key:</h6>
+                                                <textarea id="privateKey" class="form-control font-monospace small" 
+                                                          rows="3" readonly style="font-size: 0.8rem;"></textarea>
+                                                
+                                                <div class="d-grid gap-2 mt-2">
+                                                    <button id="copyKeysBtn" class="btn btn-sm btn-outline-primary">
+                                                        <i class="bi bi-clipboard"></i> Copy All Keys
+                                                    </button>
+                                                    <button id="downloadKeysBtn" class="btn btn-sm btn-outline-success">
+                                                        <i class="bi bi-download"></i> Download Keys
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status Panel -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="bi bi-activity"></i> Status Panel</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="statusPanel">
+                                        <div class="alert alert-light">
+                                            <i class="bi bi-hourglass"></i> Menunggu aksi...
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div class="progress mb-3" style="display: none;" id="progressBarContainer">
+                                        <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                                             role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    
+                                    <!-- Status Indicators -->
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="status-indicator" id="statusUpload">
+                                                <i class="bi bi-upload display-6 text-muted"></i>
+                                                <p class="small mt-1">Upload</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="status-indicator" id="statusSign">
+                                                <i class="bi bi-pen display-6 text-muted"></i>
+                                                <p class="small mt-1">Sign</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="status-indicator" id="statusVerify">
+                                                <i class="bi bi-check-circle display-6 text-muted"></i>
+                                                <p class="small mt-1">Verify</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="resultsSection" class="mt-4" style="display: none;">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Results & Verification</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="signatureResult"></div>
+                                <div id="verificationResult"></div>
+                                
+                                <!-- Signature Details -->
+                                <div id="signatureDetails" style="display: none;" class="mt-3">
+                                    <h6><i class="bi bi-file-earmark-code"></i> Signature Details:</h6>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <pre id="signatureData" class="bg-light p-3 rounded" 
+                                                 style="max-height: 200px; overflow-y: auto;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Download Options -->
+                                <div id="downloadOptions" class="mt-3" style="display: none;">
+                                    <h6><i class="bi bi-download"></i> Download Options:</h6>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <button id="downloadSignedPdfBtn" class="btn btn-success">
+                                            <i class="bi bi-file-earmark-pdf"></i> Signed PDF
+                                        </button>
+                                        <button id="downloadSignatureBtn" class="btn btn-info">
+                                            <i class="bi bi-file-earmark-code"></i> Signature File
+                                        </button>
+                                        <button id="downloadQrCodeBtn" class="btn btn-warning">
+                                            <i class="bi bi-qr-code"></i> QR Code
+                                        </button>
+                                        <button id="downloadReportBtn" class="btn btn-primary">
+                                            <i class="bi bi-file-earmark-text"></i> Report
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Global variables
+let currentFile = null;
+let signatureData = null;
+let signedPdfData = null;
+let qrCodeData = null;
+let reportData = null;
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Generate keys on page load
+    generateKeys();
+    
+    // Set up event listeners
+    setupEventListeners();
+});
+
+function setupEventListeners() {
+    // Upload button
+    document.getElementById('uploadBtn').addEventListener('click', uploadPDF);
+    
+    // Create demo PDF
+    document.getElementById('createDemoBtn').addEventListener('click', createDemoPDF);
+    
+    // Load test files
+    document.getElementById('loadTestFilesBtn').addEventListener('click', loadTestFiles);
+    
+    // Generate keys
+    document.getElementById('generateKeysBtn').addEventListener('click', generateKeys);
+    
+    // Sign PDF
+    document.getElementById('signBtn').addEventListener('click', signPDF);
+    
+    // Verify PDF
+    document.getElementById('verifyBtn').addEventListener('click', verifyPDF);
+    
+    // Download buttons
+    document.getElementById('downloadBtn').addEventListener('click', showDownloadOptions);
+    document.getElementById('downloadSignedPdfBtn').addEventListener('click', downloadSignedPDF);
+    document.getElementById('downloadSignatureBtn').addEventListener('click', downloadSignature);
+    document.getElementById('downloadQrCodeBtn').addEventListener('click', downloadQRCode);
+    document.getElementById('downloadReportBtn').addEventListener('click', downloadReport);
+    
+    // Keys buttons
+    document.getElementById('copyKeysBtn').addEventListener('click', copyKeys);
+    document.getElementById('downloadKeysBtn').addEventListener('click', downloadKeys);
+    
+    // File input change
+    document.getElementById('pdfFile').addEventListener('change', function() {
+    const file = this.files[0];
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    if (!file) {
+        uploadBtn.disabled = true;
+        return;
+    }
+
+    if (file.type !== 'application/pdf') {
+        showError('❌ File harus PDF');
+        this.value = '';
+        uploadBtn.disabled = true;
+        return;
+    }
+
+    uploadBtn.disabled = false;
+});
+
+}
+
+async function generateKeys() {
+    showProgress('Generating RSA keys...', 0);
+    updateStatusIndicator('statusUpload', 'processing');
+    
+    try {
+        const response = await fetch('/api/generate-keys');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            document.getElementById('publicKey').value = data.public_key;
+            document.getElementById('privateKey').value = data.private_key;
+            
+            showSuccess('RSA key pair generated successfully!');
+            updateStatusIndicator('statusUpload', 'success');
+            
+            // Enable buttons if file is uploaded
+            if (currentFile) {
+                enableActionButtons();
+            }
+        } else {
+            showError('Failed to generate keys: ' + data.message);
+            updateStatusIndicator('statusUpload', 'error');
+        }
+    } catch (error) {
+        showError('Error generating keys: ' + error);
+        updateStatusIndicator('statusUpload', 'error');
+    }
+    
+    hideProgress();
+}
+
+async function uploadPDF() {
+    const fileInput = document.getElementById('pdfFile');
+    const file = fileInput.files[0];
+
+    // ===============================
+    // VALIDASI UI (TAMBAHAN FIX)
+    // ===============================
+
+    if (!file) {
+        showError('❌ Please select a PDF file first!');
+        return;
+    }
+
+    if (file.type !== 'application/pdf') {
+        showError('❌ File must be a valid PDF');
+        fileInput.value = '';
+        return;
+    }
+
+    // Maks 16MB (sesuai UI kamu)
+    if (file.size > 16 * 1024 * 1024) {
+        showError('❌ Maximum file size is 16MB');
+        fileInput.value = '';
+        return;
+    }
+
+    // ===============================
+    // KODE LAMA KAMU (TIDAK DIUBAH)
+    // ===============================
+
+    showProgress('Uploading PDF...', 30);
+    updateStatusIndicator('statusUpload', 'processing');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await fetch('/api/upload-pdf', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            currentFile = data;
+
+            document.getElementById('fileName').textContent = data.filename;
+            document.getElementById('fileSize').textContent =
+                formatFileSize(file.size);
+            document.getElementById('fileHash').textContent =
+                data.file_hash.substring(0, 16) + '...';
+            document.getElementById('fileHash').title = data.file_hash;
+
+            document.getElementById('fileInfo').style.display = 'block';
+
+            enableActionButtons();
+
+            showSuccess('PDF uploaded successfully!');
+            updateStatusIndicator('statusUpload', 'success');
+        } else {
+            showError('Upload failed: ' + data.message);
+            updateStatusIndicator('statusUpload', 'error');
+        }
+    } catch (error) {
+        showError('Upload error: ' + error);
+        updateStatusIndicator('statusUpload', 'error');
+    }
+
+    hideProgress();
+}
+
+
+async function createDemoPDF() {
+    const text = prompt('Enter text for demo document:', 'Digital Signature Demo - UAS Kriptografi');
+    if (!text) return;
+    
+    showProgress('Creating demo PDF...', 30);
+    updateStatusIndicator('statusUpload', 'processing');
+    
+    try {
+        const response = await fetch(`/api/create-demo-pdf?text=${encodeURIComponent(text)}`);
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            currentFile = {
+                filename: data.filename,
+                filepath: 'demo',
+                file_hash: 'demo_hash_' + Date.now()
+            };
+            
+            // Download demo PDF
+            downloadFile(data.filename, data.pdf_data);
+            
+            // Update file info
+            document.getElementById('fileName').textContent = data.filename;
+            document.getElementById('fileSize').textContent = 'Demo Document';
+            document.getElementById('fileHash').textContent = 'Demo - No hash calculated';
+            
+            // Show file info card
+            document.getElementById('fileInfo').style.display = 'block';
+            
+            // Enable action buttons
+            enableActionButtons();
+            
+            showSuccess('Demo PDF created successfully!');
+            updateStatusIndicator('statusUpload', 'success');
+        }
+    } catch (error) {
+        showError('Error creating demo: ' + error);
+        updateStatusIndicator('statusUpload', 'error');
+    }
+    
+    hideProgress();
+}
+
+async function loadTestFiles() {
+    try {
+        const response = await fetch('/api/get-test-pdfs');
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.test_files.length > 0) {
+            let html = '<div class="list-group">';
+            data.test_files.forEach(file => {
+                html += `
+                    <a href="#" class="list-group-item list-group-item-action" 
+                       onclick="selectTestFile('${file.filepath}', '${file.filename}', '${file.hash}')">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">${file.filename}</h6>
+                            <small>${formatFileSize(file.size)}</small>
+                        </div>
+                        <small class="text-muted">Hash: ${file.hash.substring(0, 16)}...</small>
+                    </a>
+                `;
+            });
+            html += '</div>';
+            
+            // Show modal with test files
+            showModal('Select Test PDF', html);
+        } else {
+            showError('No test files available');
+        }
+    } catch (error) {
+        showError('Error loading test files: ' + error);
+    }
+}
+
+function selectTestFile(filepath, filename, hash) {
+    currentFile = {
+        filename: filename,
+        filepath: filepath,
+        file_hash: hash
+    };
+    
+    // Update file info
+    document.getElementById('fileName').textContent = filename;
+    document.getElementById('fileSize').textContent = 'Loaded from test files';
+    document.getElementById('fileHash').textContent = hash.substring(0, 16) + '...';
+    document.getElementById('fileHash').title = hash;
+    
+    // Show file info card
+    document.getElementById('fileInfo').style.display = 'block';
+    
+    // Enable action buttons
+    enableActionButtons();
+    
+    showSuccess('Test PDF selected: ' + filename);
+    bootstrap.Modal.getInstance(document.getElementById('modal')).hide();
+}
+
+function enableActionButtons() {
+    document.getElementById('signBtn').disabled = false;
+    document.getElementById('verifyBtn').disabled = false;
+    document.getElementById('signBtn').classList.remove('btn-secondary');
+    document.getElementById('signBtn').classList.add('btn-success');
+    document.getElementById('verifyBtn').classList.remove('btn-secondary');
+    document.getElementById('verifyBtn').classList.add('btn-info');
+}
+
+async function signPDF() {
+    if (!currentFile) {
+        showError('Please upload or select a PDF file first!');
+        return;
+    }
+    
+    showProgress('Signing PDF document...', 50);
+    updateStatusIndicator('statusSign', 'processing');
+    
+    const documentInfo = {
+        title: document.getElementById('docTitle').value,
+        description: document.getElementById('docDescription').value,
+        signer: document.getElementById('docSigner').value,
+        timestamp: new Date().toISOString()
+    };
+    
+    try {
+        const response = await fetch('/api/sign-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filepath: currentFile.filepath,
+                document_info: documentInfo
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            signatureData = data.signature_data;
+            signedPdfData = data.signed_pdf;
+            qrCodeData = data.qr_code;
+            reportData = data.report;
+            
+            // Show results
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('signatureResult').innerHTML = `
+                <div class="alert alert-success">
+                    <h5><i class="bi bi-check-circle"></i> PDF Successfully Signed!</h5>
+                    <p>Digital signature created using RSA 2048-bit and SHA-256.</p>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <strong>Timestamp:</strong> ${new Date(signatureData.timestamp).toLocaleString()}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Algorithm:</strong> ${signatureData.algorithm}
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <strong>Hash:</strong> ${signatureData.hash_hex.substring(0, 32)}...
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Key Size:</strong> ${signatureData.key_size}-bit
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show signature details
+            document.getElementById('signatureDetails').style.display = 'block';
+            document.getElementById('signatureData').textContent = 
+                JSON.stringify(signatureData, null, 2);
+            
+            // Show download options
+            document.getElementById('downloadOptions').style.display = 'block';
+            document.getElementById('downloadBtn').disabled = false;
+            
+            showSuccess('PDF signed successfully!');
+            updateStatusIndicator('statusSign', 'success');
+            
+            // Auto-verify after signing
+            setTimeout(verifyPDF, 1000);
+        } else {
+            showError('Signing failed: ' + data.message);
+            updateStatusIndicator('statusSign', 'error');
+        }
+    } catch (error) {
+        showError('Error signing PDF: ' + error);
+        updateStatusIndicator('statusSign', 'error');
+    }
+    
+    hideProgress();
+}
+
+async function verifyPDF() {
+    if (!currentFile) {
+        showError('Please upload or select a PDF file first!');
+        return;
+    }
+    
+    showProgress('Verifying digital signature...', 70);
+    updateStatusIndicator('statusVerify', 'processing');
+    
+    try {
+        const response = await fetch('/api/verify-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filepath: currentFile.filepath,
+                signature_data: signatureData
+            })
+        });
+        
+        const data = await response.json();
+        
+        document.getElementById('verificationResult').innerHTML = '';
+        
+        if (data.status === 'success') {
+            const isVerified = data.verified;
+            const badgeClass = isVerified ? 'success' : 'danger';
+            const icon = isVerified ? 'check-circle' : 'x-circle';
+            const title = isVerified ? 'Signature VALID' : 'Signature INVALID';
+            
+            document.getElementById('verificationResult').innerHTML = `
+                <div class="alert alert-${badgeClass}">
+                    <h5><i class="bi bi-${icon}"></i> ${title}</h5>
+                    <p>${data.message}</p>
+                    ${data.details ? `
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <strong>Authentication:</strong> ${data.details.authentication}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Integrity:</strong> ${data.details.document_integrity}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Non-repudiation:</strong> ${data.details.non_repudiation}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${data.integrity ? `<p class="mt-2"><strong>Integrity Check:</strong> ${data.integrity}</p>` : ''}
+                </div>
+            `;
+            
+            if (isVerified) {
+                showSuccess('Signature verification successful!');
+                updateStatusIndicator('statusVerify', 'success');
+            } else {
+                showWarning('Signature verification failed!');
+                updateStatusIndicator('statusVerify', 'error');
+            }
+        } else {
+            document.getElementById('verificationResult').innerHTML = `
+                <div class="alert alert-warning">
+                    <h5><i class="bi bi-exclamation-triangle"></i> Verification Error</h5>
+                    <p>${data.message}</p>
+                </div>
+            `;
+            showError('Verification error: ' + data.message);
+            updateStatusIndicator('statusVerify', 'error');
+        }
+    } catch (error) {
+        showError('Error verifying signature: ' + error);
+        updateStatusIndicator('statusVerify', 'error');
+    }
+    
+    hideProgress();
+}
+
+function showDownloadOptions() {
+    if (!signedPdfData) {
+        showError('No signed document available for download');
+        return;
+    }
+    
+    // Already shown in the results section
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function downloadSignedPDF() {
+    if (!signedPdfData) {
+        showError('No signed PDF available');
+        return;
+    }
+    downloadFile('signed_document.pdf', signedPdfData);
+}
+
+function downloadSignature() {
+    if (!signatureData) {
+        showError('No signature data available');
+        return;
+    }
+    
+    const signatureJson = JSON.stringify(signatureData, null, 2);
+    const blob = new Blob([signatureJson], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'digital_signature.json';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+}
+
+function downloadQRCode() {
+    if (!qrCodeData) {
+        showError('No QR code available');
+        return;
+    }
+    downloadFile('signature_qrcode.png', qrCodeData);
+}
+
+function downloadReport() {
+    if (!reportData) {
+        showError('No report available');
+        return;
+    }
+    downloadFile('verification_report.pdf', reportData);
+}
+
+function downloadKeys() {
+    const publicKey = document.getElementById('publicKey').value;
+    const privateKey = document.getElementById('privateKey').value;
+    
+    if (!publicKey || !privateKey) {
+        showError('No keys available for download');
+        return;
+    }
+    
+    const keysContent = `=== PUBLIC KEY ===\n${publicKey}\n\n=== PRIVATE KEY ===\n${privateKey}`;
+    const blob = new Blob([keysContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'rsa_keys.txt';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+}
+
+function copyKeys() {
+    const publicKey = document.getElementById('publicKey').value;
+    const privateKey = document.getElementById('privateKey').value;
+    
+    if (!publicKey || !privateKey) {
+        showError('No keys available to copy');
+        return;
+    }
+    
+    const keysText = `Public Key:\n${publicKey}\n\nPrivate Key:\n${privateKey}`;
+    
+    navigator.clipboard.writeText(keysText).then(() => {
+        showSuccess('Keys copied to clipboard!');
+    }).catch(err => {
+        showError('Failed to copy keys: ' + err);
+    });
+}
+
+// Utility functions
+function showProgress(message, percentage) {
+    document.getElementById('progressBarContainer').style.display = 'block';
+    document.getElementById('progressBar').style.width = percentage + '%';
+    document.getElementById('progressBar').textContent = message;
+}
+
+function hideProgress() {
+    setTimeout(() => {
+        document.getElementById('progressBarContainer').style.display = 'none';
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressBar').textContent = '';
+    }, 500);
+}
+
+function updateStatusIndicator(elementId, status) {
+    const element = document.getElementById(elementId);
+    const icon = element.querySelector('i');
+    
+    // Reset all icons
+    element.classList.remove('text-success', 'text-danger', 'text-warning');
+    icon.classList.remove('bi-check-circle-fill', 'bi-x-circle-fill', 'bi-hourglass');
+    
+    switch(status) {
+        case 'processing':
+            element.classList.add('text-warning');
+            icon.classList.add('bi-hourglass');
+            break;
+        case 'success':
+            element.classList.add('text-success');
+            icon.classList.add('bi-check-circle-fill');
+            break;
+        case 'error':
+            element.classList.add('text-danger');
+            icon.classList.add('bi-x-circle-fill');
+            break;
+        default:
+            element.classList.add('text-muted');
+            icon.classList.remove('bi-upload', 'bi-pen', 'bi-check-circle');
+    }
+}
+
+function showSuccess(message) {
+    document.getElementById('statusPanel').innerHTML = `
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle"></i> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+}
+
+function showError(message) {
+    document.getElementById('statusPanel').innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-x-circle"></i> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+}
+
+function showWarning(message) {
+    document.getElementById('statusPanel').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show">
+            <i class="bi bi-exclamation-triangle"></i> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function downloadFile(filename, base64Data) {
+    fetch('/api/download-file', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            filename: filename,
+            file_data: base64Data
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    });
+}
+
+function showModal(title, content) {
+    // Create modal if it doesn't exist
+    if (!document.getElementById('modal')) {
+        const modalHTML = `
+            <div class="modal fade" id="modal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">${title}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            ${content}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    } else {
+        document.querySelector('#modal .modal-title').textContent = title;
+        document.querySelector('#modal .modal-body').innerHTML = content;
+    }
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('modal'));
+    modal.show();
+}
+</script>
+
+<style>
+.status-indicator {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.processing {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.status-indicator.success {
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+.status-indicator.error {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    0% { background-position: 1rem 0; }
+    100% { background-position: 0 0; }
+}
+
+.font-monospace {
+    font-family: 'Courier New', monospace;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+</style>
+{% endblock %}

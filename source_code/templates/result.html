@@ -1,0 +1,809 @@
+{% extends "base.html" %}
+
+{% block title %}Results - Digital Signature{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Main Card -->
+            <div class="card shadow-lg mb-4 animate__animated animate__fadeIn">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="bi bi-graph-up"></i> Results & Reports</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Introduction -->
+                    <div class="alert alert-primary">
+                        <h5><i class="bi bi-collection"></i> Kumpulan Hasil UAS</h5>
+                        <p class="mb-0">
+                            Semua file yang diperlukan untuk pengumpulan UAS tersedia di sini. 
+                            Download ZIP package untuk mendapatkan semua komponen sekaligus.
+                        </p>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-folder display-4 text-primary mb-3"></i>
+                                    <h5>Output Files</h5>
+                                    <p id="outputFileCount" class="display-6 mb-0">0</p>
+                                    <small class="text-muted">Generated</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-clock-history display-4 text-warning mb-3"></i>
+                                    <h5>Last Activity</h5>
+                                    <p id="lastActivityTime" class="h4 mb-0">-</p>
+                                    <small class="text-muted">Timestamp</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-shield-check display-4 text-success mb-3"></i>
+                                    <h5>Security Status</h5>
+                                    <p id="securityStatus" class="h4 mb-0">ACTIVE</p>
+                                    <small class="text-muted">System</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-check-circle display-4 text-info mb-3"></i>
+                                    <h5>UAS Ready</h5>
+                                    <p class="h4 mb-0">YES</p>
+                                    <small class="text-muted">All Requirements</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-clock-history"></i> System Activity Log</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="activityLog">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Timestamp</th>
+                                            <th>Activity</th>
+                                            <th>Description</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="activityLogBody">
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                                <p class="mt-2">Loading activity log...</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button id="refreshLog" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-clockwise"></i> Refresh Log
+                                </button>
+                                <button id="clearLog" class="btn btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Clear Log
+                                </button>
+                                <button id="exportLog" class="btn btn-outline-success">
+                                    <i class="bi bi-download"></i> Export Log
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate Final Report -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-file-earmark-text"></i> Generate Final UAS Report</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Generate laporan UAS lengkap dengan informasi mahasiswa:</p>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama Mahasiswa</label>
+                                        <input type="text" class="form-control" id="studentName" 
+                                               value="Mahasiswa Kriptografi" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">NIM</label>
+                                        <input type="text" class="form-control" id="studentNIM" 
+                                               value="123456789" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Program Studi</label>
+                                        <select class="form-select" id="studentProgram">
+                                            <option value="Teknik Informatika">Teknik Informatika</option>
+                                            <option value="Sistem Informasi">Sistem Informasi</option>
+                                            <option value="Ilmu Komputer">Ilmu Komputer</option>
+                                            <option value="Teknik Komputer">Teknik Komputer</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Dosen Pengampu</label>
+                                        <input type="text" class="form-control" id="lecturerName" 
+                                               value="Dr. Kriptografer, M.Kom." required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Additional Notes (Optional)</label>
+                                <textarea class="form-control" id="additionalNotes" rows="3" 
+                                          placeholder="Tambahkan catatan khusus untuk laporan..."></textarea>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button id="generateReportBtn" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-file-earmark-pdf"></i> Generate Final Report (PDF)
+                                </button>
+                            </div>
+                            
+                            <div id="reportResult" class="mt-3" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Download All Results -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0"><i class="bi bi-download"></i> Download All Results</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Download semua file dalam satu paket ZIP untuk pengumpulan UAS:</p>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6><i class="bi bi-file-pdf"></i> PDF Documents</h6>
+                                            <ul class="mb-0">
+                                                <li>File PDF asli (test documents)</li>
+                                                <li>File PDF bertanda tangan digital</li>
+                                                <li>Laporan verifikasi lengkap</li>
+                                                <li>Laporan final UAS</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6><i class="bi bi-code-slash"></i> Source Code & Data</h6>
+                                            <ul class="mb-0">
+                                                <li>Source code program Python</li>
+                                                <li>File tanda tangan digital (.json)</li>
+                                                <li>Public & private keys</li>
+                                                <li>Log aktivitas sistem</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-success">
+                                <h6><i class="bi bi-check-circle"></i> Included in ZIP Package:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li>📁 <strong>source_code/</strong> - All Python source files</li>
+                                            <li>📁 <strong>test_pdfs/</strong> - Original test documents</li>
+                                            <li>📁 <strong>signatures/</strong> - Signed PDFs & signatures</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li>📁 <strong>reports/</strong> - Verification & UAS reports</li>
+                                            <li>📁 <strong>keys/</strong> - RSA public & private keys</li>
+                                            <li>📄 <strong>activity_log.json</strong> - System activity log</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <a href="/api/export-results" class="btn btn-success btn-lg">
+                                    <i class="bi bi-file-zip"></i> Download ZIP Package
+                                </a>
+                                <p class="text-muted mt-2">File ZIP berisi semua komponen yang diperlukan untuk penilaian UAS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Summary -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-shield"></i> Security Implementation Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100 text-center border-success">
+                                        <div class="card-body">
+                                            <div class="display-4 text-success mb-3">✓</div>
+                                            <h5>Autentikasi</h5>
+                                            <p class="card-text">Verifikasi identitas penandatangan menggunakan RSA public key</p>
+                                            <div class="mt-3">
+                                                <span class="badge bg-success">IMPLEMENTED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100 text-center border-info">
+                                        <div class="card-body">
+                                            <div class="display-4 text-info mb-3">✓</div>
+                                            <h5>Integritas</h5>
+                                            <p class="card-text">SHA-256 hash memastikan dokumen tidak berubah</p>
+                                            <div class="mt-3">
+                                                <span class="badge bg-info">IMPLEMENTED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100 text-center border-warning">
+                                        <div class="card-body">
+                                            <div class="display-4 text-warning mb-3">✓</div>
+                                            <h5>Non-repudiasi</h5>
+                                            <p class="card-text">Private key unik mencegah penyangkalan tanda tangan</p>
+                                            <div class="mt-3">
+                                                <span class="badge bg-warning">IMPLEMENTED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-success mt-3">
+                                <h6><i class="bi bi-check-circle"></i> Persyaratan UAS Terpenuhi:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li>✅ File PDF asli</li>
+                                            <li>✅ File tanda tangan digital</li>
+                                            <li>✅ Hasil verifikasi</li>
+                                            <li>✅ Source code program</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li>✅ Laporan UAS lengkap</li>
+                                            <li>✅ Analisis keamanan</li>
+                                            <li>✅ Dokumentasi sistem</li>
+                                            <li>✅ Testing results</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <h6><i class="bi bi-lightbulb"></i> Petunjuk Pengumpulan:</h6>
+                                <ol class="mb-0">
+                                    <li>Download ZIP package dari tombol di atas</li>
+                                    <li>Generate laporan UAS dengan data mahasiswa Anda</li>
+                                    <li>Upload ZIP file dan laporan PDF ke LMS/Google Classroom</li>
+                                    <li>Sertakan screenshot aplikasi yang berjalan</li>
+                                    <li>Jelaskan fitur utama dalam deskripsi submission</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadActivityLog();
+    setupEventListeners();
+    updateSystemStatus();
+});
+
+function setupEventListeners() {
+    // Refresh log button
+    document.getElementById('refreshLog').addEventListener('click', loadActivityLog);
+    
+    // Clear log button
+    document.getElementById('clearLog').addEventListener('click', clearActivityLog);
+    
+    // Export log button
+    document.getElementById('exportLog').addEventListener('click', exportActivityLog);
+    
+    // Generate report button
+    document.getElementById('generateReportBtn').addEventListener('click', generateFinalReport);
+}
+
+function updateSystemStatus() {
+    // Update last activity time
+    const now = new Date();
+    document.getElementById('lastActivityTime').textContent = 
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    // Update output file count (this would normally come from an API)
+    // For now, we'll set a placeholder
+    document.getElementById('outputFileCount').textContent = '?';
+    
+    // Update security status based on last test results
+    const lastResults = localStorage.getItem('lastTestResults');
+    if (lastResults) {
+        const results = JSON.parse(lastResults);
+        const passed = results.test_results.filter(r => r.status === 'PASSED').length;
+        const total = results.test_results.length;
+        const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
+        
+        if (successRate === 100) {
+            document.getElementById('securityStatus').textContent = 'SECURE';
+            document.getElementById('securityStatus').className = 'h4 mb-0 text-success';
+        } else if (successRate >= 80) {
+            document.getElementById('securityStatus').textContent = 'GOOD';
+            document.getElementById('securityStatus').className = 'h4 mb-0 text-warning';
+        } else {
+            document.getElementById('securityStatus').textContent = 'CHECK';
+            document.getElementById('securityStatus').className = 'h4 mb-0 text-danger';
+        }
+    }
+}
+
+async function loadActivityLog() {
+    try {
+        const response = await fetch('/api/get-activity-log');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            const tableBody = document.getElementById('activityLogBody');
+            tableBody.innerHTML = '';
+            
+            if (data.log_entries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                No activity log entries found.
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Show latest 20 activities
+            const recentActivities = data.log_entries.slice(-20).reverse();
+            
+            recentActivities.forEach((activity, index) => {
+                const timestamp = new Date(activity.timestamp);
+                const timeStr = timestamp.toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                const dateStr = timestamp.toLocaleDateString();
+                
+                // Determine activity type and icon
+                let icon = 'bi-activity';
+                let badgeClass = 'secondary';
+                
+                if (activity.activity.includes('SIGN')) {
+                    icon = 'bi-pen';
+                    badgeClass = 'primary';
+                } else if (activity.activity.includes('VERIFY')) {
+                    icon = activity.description.includes('success') ? 
+                           'bi-check-circle' : 'bi-x-circle';
+                    badgeClass = activity.description.includes('success') ? 
+                                'success' : 'danger';
+                } else if (activity.activity.includes('KEY')) {
+                    icon = 'bi-key';
+                    badgeClass = 'warning';
+                } else if (activity.activity.includes('TEST')) {
+                    icon = 'bi-speedometer2';
+                    badgeClass = 'info';
+                } else if (activity.activity.includes('UPLOAD')) {
+                    icon = 'bi-upload';
+                    badgeClass = 'info';
+                } else if (activity.activity.includes('ERROR')) {
+                    icon = 'bi-exclamation-triangle';
+                    badgeClass = 'danger';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <small>${dateStr}<br>${timeStr}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-${badgeClass}">
+                            <i class="bi ${icon}"></i> ${activity.activity}
+                        </span>
+                    </td>
+                    <td>${activity.description}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-info" 
+                                onclick="showActivityDetails(${index})"
+                                title="View details">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Update last activity time
+            if (recentActivities.length > 0) {
+                const latest = new Date(recentActivities[0].timestamp);
+                document.getElementById('lastActivityTime').textContent = 
+                    latest.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+            
+            // Update output file count estimate
+            const fileCount = Math.min(data.total_entries * 2, 99); // Estimate
+            document.getElementById('outputFileCount').textContent = fileCount;
+            
+        } else {
+            showError('Failed to load activity log');
+        }
+    } catch (error) {
+        console.error('Error loading activity log:', error);
+        showError('Error loading activity log: ' + error.message);
+    }
+}
+
+function showActivityDetails(index) {
+    // This would show a modal with detailed activity information
+    // For now, we'll just show an alert
+    fetch('/api/get-activity-log')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const activities = data.log_entries.slice(-20).reverse();
+                if (index < activities.length) {
+                    const activity = activities[index];
+                    const details = JSON.stringify(activity.data || {}, null, 2);
+                    
+                    const modalContent = `
+                        <div class="modal fade" id="activityDetailsModal" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Activity Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <strong>Activity:</strong> ${activity.activity}<br>
+                                            <strong>Timestamp:</strong> ${activity.timestamp}<br>
+                                            <strong>Description:</strong> ${activity.description}
+                                        </div>
+                                        <div>
+                                            <strong>Details:</strong>
+                                            <pre class="bg-light p-3 rounded mt-2" style="max-height: 300px; overflow-y: auto;">
+${details}
+                                            </pre>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Remove existing modal if any
+                    const existingModal = document.getElementById('activityDetailsModal');
+                    if (existingModal) {
+                        existingModal.remove();
+                    }
+                    
+                    // Add new modal
+                    document.body.insertAdjacentHTML('beforeend', modalContent);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('activityDetailsModal'));
+                    modal.show();
+                }
+            }
+        });
+}
+
+async function clearActivityLog() {
+    if (!confirm('Are you sure you want to clear the activity log? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        // Note: This would typically call an API endpoint to clear the log
+        // For now, we'll just reload the log
+        showSuccess('Activity log cleared (simulated)');
+        loadActivityLog();
+    } catch (error) {
+        showError('Error clearing activity log: ' + error.message);
+    }
+}
+
+function exportActivityLog() {
+    fetch('/api/get-activity-log')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const logContent = JSON.stringify(data.log_entries, null, 2);
+                const blob = new Blob([logContent], { type: 'application/json' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `activity_log_${new Date().toISOString().slice(0, 10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                showSuccess('Activity log exported successfully!');
+            }
+        })
+        .catch(error => {
+            showError('Error exporting activity log: ' + error.message);
+        });
+}
+
+async function generateFinalReport() {
+    const studentName = document.getElementById('studentName').value;
+    const studentNIM = document.getElementById('studentNIM').value;
+    const studentProgram = document.getElementById('studentProgram').value;
+    const lecturerName = document.getElementById('lecturerName').value;
+    const additionalNotes = document.getElementById('additionalNotes').value;
+    
+    if (!studentName || !studentNIM || !lecturerName) {
+        showError('Please fill in all required fields (Name, NIM, and Lecturer)');
+        return;
+    }
+    
+    const button = document.getElementById('generateReportBtn');
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Generating...';
+    button.disabled = true;
+    
+    const studentInfo = {
+        name: studentName,
+        nim: studentNIM,
+        program: studentProgram,
+        lecturer: lecturerName,
+        notes: additionalNotes
+    };
+    
+    try {
+        const response = await fetch('/api/generate-final-report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                student_info: studentInfo
+            })
+        });
+        
+        const data = await response.json();
+        
+        button.innerHTML = originalText;
+        button.disabled = false;
+        
+        if (data.status === 'success') {
+            // Show success message
+            document.getElementById('reportResult').style.display = 'block';
+            document.getElementById('reportResult').innerHTML = `
+                <div class="alert alert-success">
+                    <h5><i class="bi bi-check-circle"></i> Laporan Berhasil Digenerate!</h5>
+                    <p>Laporan UAS telah dibuat dengan format PDF.</p>
+                    <div class="d-flex gap-2 mt-3">
+                        <button id="downloadReportBtn" class="btn btn-success">
+                            <i class="bi bi-download"></i> Download Laporan
+                        </button>
+                        <button id="previewReportBtn" class="btn btn-outline-success">
+                            <i class="bi bi-eye"></i> Preview
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add download button functionality
+            document.getElementById('downloadReportBtn').addEventListener('click', function() {
+                downloadFile(data.filename, data.report);
+            });
+            
+            // Add preview button functionality
+            document.getElementById('previewReportBtn').addEventListener('click', function() {
+                previewReport(data.report);
+            });
+            
+            // Auto download after 2 seconds
+            setTimeout(() => {
+                downloadFile(data.filename, data.report);
+            }, 2000);
+            
+        } else {
+            document.getElementById('reportResult').style.display = 'block';
+            document.getElementById('reportResult').innerHTML = `
+                <div class="alert alert-danger">
+                    <h5><i class="bi bi-x-circle"></i> Error!</h5>
+                    <p>${data.message}</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        
+        document.getElementById('reportResult').style.display = 'block';
+        document.getElementById('reportResult').innerHTML = `
+            <div class="alert alert-danger">
+                <h5><i class="bi bi-x-circle"></i> Error!</h5>
+                <p>${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+function downloadFile(filename, base64Data) {
+    fetch('/api/download-file', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            filename: filename,
+            file_data: base64Data
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        showSuccess('File downloaded successfully!');
+    })
+    .catch(error => {
+        showError('Error downloading file: ' + error.message);
+    });
+}
+
+function previewReport(base64Data) {
+    const pdfWindow = window.open();
+    const pdfData = `data:application/pdf;base64,${base64Data}`;
+    pdfWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Report Preview</title>
+            <style>
+                body, html { margin: 0; padding: 0; height: 100%; }
+                iframe { width: 100%; height: 100%; border: none; }
+            </style>
+        </head>
+        <body>
+            <iframe src="${pdfData}"></iframe>
+        </body>
+        </html>
+    `);
+}
+
+function showSuccess(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3';
+    alertDiv.style.zIndex = '1050';
+    alertDiv.innerHTML = `
+        <i class="bi bi-check-circle"></i> ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+function showError(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3';
+    alertDiv.style.zIndex = '1050';
+    alertDiv.innerHTML = `
+        <i class="bi bi-x-circle"></i> ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+</script>
+
+<style>
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    font-weight: 600;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.alert {
+    border: none;
+    border-radius: 8px;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.position-fixed {
+    z-index: 1050;
+}
+
+pre {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.modal-body pre {
+    max-height: 300px;
+    overflow-y: auto;
+}
+</style>
+{% endblock %}
