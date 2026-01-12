@@ -1,11 +1,3 @@
-GASSS 🔥
-ini aku bikinin **README.md FULL, RAPII, AMAN LISENSI, SIAP UPLOAD GITHUB**, **relevan 100% sama program kamu** (Digital Signature PDF – UAS Kriptografi) **dan sudah nyambung dengan semua revisi & perbaikan yang tadi**.
-
-Kamu **tinggal COPAS → simpan sebagai `README.md` → push ke GitHub**.
-Tidak ada bagian abu-abu. Tidak setengah-setengah.
-
----
-
 # 📄 Digital Signature PDF System
 
 ### UAS Kriptografi – Implementasi RSA 2048-bit & SHA-256
